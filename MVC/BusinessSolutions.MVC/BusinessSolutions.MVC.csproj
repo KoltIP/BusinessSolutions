@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Configuration\FluentValidatorConfiguration\**" />
+    <Content Remove="Configuration\FluentValidatorConfiguration\**" />
+    <EmbeddedResource Remove="Configuration\FluentValidatorConfiguration\**" />
+    <None Remove="Configuration\FluentValidatorConfiguration\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="FluentValidation" Version="11.2.2" />
@@ -26,12 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\FluentValidatorConfiguration\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\BusinessSolutions.OrderServices\BusinessSolutions.OrderServices.csproj" />
     <ProjectReference Include="..\..\Data\BusinessSolutions.Data.Context\BusinessSolutions.Data.Context.csproj" />
+    <ProjectReference Include="..\..\Services\BusinessSolutions.OrderItemServices\BusinessSolutions.OrderItemServices.csproj" />
+    <ProjectReference Include="..\..\Services\BusinessSolutions.OrderServices\BusinessSolutions.OrderServices.csproj" />
+    <ProjectReference Include="..\..\Services\BusinessSolutions.ProviderServices\BusinessSolutions.ProviderServices.csproj" />
   </ItemGroup>
 
 </Project>

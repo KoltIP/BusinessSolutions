@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using BusinessSolutions.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,4 +15,13 @@ namespace BusinessSolutions.OrderServices.Models
         public DateTime Date { get; set; }
         public int ProviderId { get; set; }
     }
+
+    public class OrderModelProfile : Profile
+    {
+        public OrderModelProfile()
+        {
+            CreateMap<Order, OrderModel>();
+        }
+    }
+
 }
