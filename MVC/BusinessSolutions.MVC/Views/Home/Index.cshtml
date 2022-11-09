@@ -2,9 +2,11 @@
     ViewData["Title"] = "Main Page";
 }
 <script>
+    
+    
     function addProduct()
     {
-        let str = "12"
+        let str = "1"
         $.get("Add/" + str,
        {
             search: str.value
@@ -14,6 +16,23 @@
             alert("успешно");
        });
     }
+
+
+    function getOrders()
+    {
+        let str = "1"
+        $.get("getorders/",
+       {},
+       function(data) 
+       {
+            let length = data.length;
+            for (let i = 0; i < length; i++) 
+            {
+                alert(data[i].id);
+            }
+       });
+    }
+
 </script>
 
 
