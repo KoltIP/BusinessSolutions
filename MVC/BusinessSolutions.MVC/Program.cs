@@ -1,9 +1,11 @@
 using BusinessSolutions.MVC;
+using BusinessSolutions.MVC.Configuration.AutoMapperConfiguration;
 using BusinessSolutions.MVC.Configuration.DbConfiguration;
+using BusinessSolutions.MVC.Configuration.VersionConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddAppVersion();
+builder.Services.AddAppVersion();
 
 builder.Services.AddControllersWithViews();
 
@@ -11,7 +13,7 @@ builder.Services.AddHttpClient();
 
 builder.AddAppDbOption();
 
-//builder.Services.AddAppAutoMapper();
+builder.Services.AddAppAutoMapper();
 
 builder.Services.AddAppServices();
 

@@ -25,9 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\AutoMapperConfiguration\" />
     <Folder Include="Configuration\FluentValidatorConfiguration\" />
-    <Folder Include="Configuration\VersionConfiguration\" />
   </ItemGroup>
 
   <ItemGroup>
