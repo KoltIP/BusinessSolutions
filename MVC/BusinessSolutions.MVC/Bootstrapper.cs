@@ -1,11 +1,13 @@
-﻿namespace BusinessSolutions.MVC
+﻿using BusinessSolutions.OrderServices;
+
+namespace BusinessSolutions.MVC
 {
     public static class Bootstrapper
     {
-        public static void AddAppServices(this IServiceCollection services)
+        public static IServiceCollection AddAppServices(this IServiceCollection services)
         {
-            //services.AddDivisionService();
-            //return services;
+            services.AddOrderService();
+            return services;
         }
     }
 }
