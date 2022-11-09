@@ -12,7 +12,7 @@ namespace BusinessSolutions.OrderServices
     {
         public static IServiceCollection AddOrderService(this IServiceCollection services)
         {
-            services.AddSingleton<IOrderService, OrderService>();
+            services.AddTransient<IOrderService, OrderService>();
 
 
             return services;

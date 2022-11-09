@@ -11,7 +11,7 @@ namespace BusinessSolutions.MVC.Models.Order
         public string Number { get; set; } = string.Empty;
         public DateTime Date { get; set; }
         public string ProviderName { get; set; } = string.Empty;
-        public List<OrderItemsResponse> Content {get;set;}
+        public List<OrderItemResponse> Content {get;set;}
     }
 
     public class OrderResponseProfile : Profile

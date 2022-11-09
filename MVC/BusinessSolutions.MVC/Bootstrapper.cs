@@ -1,4 +1,6 @@
-﻿using BusinessSolutions.OrderServices;
+﻿using BusinessSolutions.OrderItemServices;
+using BusinessSolutions.OrderServices;
+using BusinessSolutions.ProviderServices;
 
 namespace BusinessSolutions.MVC
 {
@@ -7,6 +9,8 @@ namespace BusinessSolutions.MVC
         public static IServiceCollection AddAppServices(this IServiceCollection services)
         {
             services.AddOrderService();
+            services.AddOrderItemService();
+            services.AddProviderService();
             return services;
         }
     }
