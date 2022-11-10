@@ -25,9 +25,11 @@ namespace BusinessSolutions.MVC.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var models = await orderService.GetOrders();
+            IEnumerable<OrderResponse> response = mapper.Map<IEnumerable<OrderResponse>>(models);
+            return View("Index", response);
         }
 
         [HttpGet("getorder/{id}")]

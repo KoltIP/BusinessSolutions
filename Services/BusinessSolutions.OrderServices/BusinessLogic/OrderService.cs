@@ -18,17 +18,11 @@ namespace BusinessSolutions.OrderServices.BusinessLogic
 
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _dbContext;
-        //private readonly IModelValidator<AddOrderModel> addOrderModelValidator;
-        //private readonly IModelValidator<UpdateOrderModel> updateOrderModelValidator;
         
-        public OrderService(ApplicationDbContext dbContext, IMapper _mapper)
-            //IModelValidator<AddOrderModel> addOrderModelValidator,
-            //IModelValidator<UpdateOrderModel> updateOrderModelValidator)
+        public OrderService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
-            _mapper = _mapper;
-            //this.addOrderModelValidator = addOrderModelValidator;
-            //this.updateOrderModelValidator = updateOrderModelValidator;
+            _mapper = mapper;
         }
 
 

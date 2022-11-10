@@ -33,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BusinessSolutions.OrderServices\BusinessSolutions.OrderServices.csproj" />
     <ProjectReference Include="..\..\Data\BusinessSolutions.Data.Context\BusinessSolutions.Data.Context.csproj" />
     <ProjectReference Include="..\..\Services\BusinessSolutions.OrderItemServices\BusinessSolutions.OrderItemServices.csproj" />
     <ProjectReference Include="..\..\Services\BusinessSolutions.OrderServices\BusinessSolutions.OrderServices.csproj" />
