@@ -9,7 +9,7 @@ namespace BusinessSolutions.MVC.Models.Order
     {
         public int Id { get; set; }
         public string Number { get; set; } = string.Empty;
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string ProviderName { get; set; } = string.Empty;
         public List<OrderItemResponse> Content {get;set;}
     }
@@ -18,7 +18,8 @@ namespace BusinessSolutions.MVC.Models.Order
     {
         public OrderResponseProfile()
         {
-            CreateMap<OrderModel, OrderResponse>();
+            CreateMap<OrderModel, OrderResponse>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => (src.Date).ToShortDateString()));
         }
     }
 

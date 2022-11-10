@@ -24,4 +24,12 @@ namespace BusinessSolutions.OrderServices.Models
         }
     }
 
+    public class OrderProfile : Profile
+    {
+        public OrderProfile()
+        {
+            CreateMap<OrderModel,Order>();
+        }
+    }
+
 }

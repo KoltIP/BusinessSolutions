@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessSolutions.OrderServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessSolutions.OrderItemServices", "Services\BusinessSolutions.OrderItemServices\BusinessSolutions.OrderItemServices.csproj", "{A7AE7B47-8CDE-4524-874F-18A923FE9EFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessSolutions.ProviderServices", "Services\BusinessSolutions.ProviderServices\BusinessSolutions.ProviderServices.csproj", "{79E73D5C-C5E0-4B4B-8492-DC57F82FA702}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessSolutions.ProviderServices", "Services\BusinessSolutions.ProviderServices\BusinessSolutions.ProviderServices.csproj", "{79E73D5C-C5E0-4B4B-8492-DC57F82FA702}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

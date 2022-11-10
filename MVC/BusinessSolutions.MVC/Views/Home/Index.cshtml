@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<BusinessSolutions.MVC.Models.Order.OrderResponse>;
+
+@{
     ViewData["Title"] = "Main Page";
 }
 <script>
@@ -69,14 +71,30 @@
     <table border="1" class="flex-content-item">
         <thead>
            <tr>
-                <th>Id</th>
-                <th>Number</th>
-                <th>Date</th>
-                <th>Provider</th>            
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Number)</th>
+                <th>@Html.DisplayNameFor(model => model.ProviderName)</th>
+                <th>@Html.DisplayNameFor(model => model.Date)</th>            
            </tr>
         </thead>
         <tbody id="content">
-           <tr><td>34,5</td><td>3,5</td><td>36</td><td>23</td></tr>      
+            @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProviderName)
+                        </td>     
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>  
+                    </tr>
+                }   
         </tbody>
       </table>
 </div>
