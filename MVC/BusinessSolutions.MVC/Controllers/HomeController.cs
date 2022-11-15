@@ -32,41 +32,27 @@ namespace BusinessSolutions.MVC.Controllers
             return View("Index", response);
         }
 
-        [HttpGet("getorder/{id}")]
-        public async Task<OrderResponse> GetOrder([FromRoute] int id)
+        [HttpPost("filter")]
+        public async Task<IActionResult> Filter()
         {
-            OrderModel model = await orderService.GetOrder(id);
-            OrderResponse response = mapper.Map<OrderResponse>(model);
-            return response;
+            var filteredModels = await orderService.GetOrders();
+            IEnumerable<OrderResponse> filteredResponse = mapper.Map<IEnumerable<OrderResponse>>(filteredModels);
+            return View("Index", filteredResponse);
         }
-
+         
         [HttpGet("getorders")]
         public async Task<IEnumerable<OrderResponse>> GetOrders()
         {
             var models = await orderService.GetOrders();
             var response = mapper.Map<IEnumerable<OrderResponse>>(models);
             return response;
-        }
+        }    
 
-        //[HttpPost("add")]
-        //public async Task<IActionResult> AddOrder([FromRoute] AddOrderModel addOrderModel)
-        //{
-        //    await orderService.AddOrder(addOrderModel);
-        //    return Ok();
-        //}       
-
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateOrder([FromRoute] int id, [FromBody] UpdateOrderModel updateOrderModel)
-        {
-            await orderService.UpdateOrder(id, updateOrderModel);
-            return Ok();
-        }
-
-        [HttpDelete("delete/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> DeleteOrder([FromRoute] int id)
         {
-            await orderService.DeleteOrder(id);
-            return Ok();
+            await orderService.DeleteOrder(id);            
+            return Redirect("/");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
