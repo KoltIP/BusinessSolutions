@@ -71,14 +71,20 @@
                                     </button>
                                 </div>
                             </a>
+                             <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
+                                <div class="btn-group btn-group-sm">
+                                    <button type="submit" class="button-accept-filter">
+                                        <i class="far fa-trash-alt">Delete</i>
+                                    </button>
+                                </div>
+                            </a>
                         </td>
                     </tr>
                 }   
         </tbody>
-      </table>
+      </table>     
 </div>
 
-
-<a href ="/AddOrder" class="btn btn-secondary">
+ <a href ="/AddOrder" class="btn btn-secondary">
     Добавить заказ
 </a>
