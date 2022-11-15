@@ -48,12 +48,12 @@ namespace BusinessSolutions.MVC.Controllers
             return response;
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> AddOrder([FromRoute] AddOrderModel addOrderModel)
-        {
-            await orderService.AddOrder(addOrderModel);
-            return Ok();
-        }
+        //[HttpPost("add")]
+        //public async Task<IActionResult> AddOrder([FromRoute] AddOrderModel addOrderModel)
+        //{
+        //    await orderService.AddOrder(addOrderModel);
+        //    return Ok();
+        //}       
 
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateOrder([FromRoute] int id, [FromBody] UpdateOrderModel updateOrderModel)

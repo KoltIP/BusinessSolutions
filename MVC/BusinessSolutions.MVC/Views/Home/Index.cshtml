@@ -6,18 +6,18 @@
 <script>
     
     
-    function addProduct()
-    {
-        let str = "1"
-        $.get("Add/" + str,
-       {
-            search: str.value
-       },
-       function(data) 
-       {
-            alert("успешно");
-       });
-    }
+    //function addProduct()
+    //{
+    //    let str = "1"
+    //    $.get("Add/" + str,
+    //   {
+    //        search: str.value
+    //   },
+    //   function(data) 
+    //   {
+    //        alert("успешно");
+    //   });
+    //}
 
 
     function getOrders()
@@ -99,6 +99,7 @@
       </table>
 </div>
 
-<button class="add-order-button" onclick="addProduct">
+
+<a href ="/AddOrder" class="btn btn-secondary">
     Добавить заказ
-</button>
+</a>

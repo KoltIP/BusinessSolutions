@@ -37,7 +37,8 @@ namespace BusinessSolutions.OrderServices.Models
     {
         public AddOrderModelProfile()
         {
-            CreateMap<AddOrderModel, Order>();
+                CreateMap<AddOrderModel, Order>()
+                    .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToUniversalTime()));            
         }
     }
 
