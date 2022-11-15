@@ -1,6 +1,6 @@
-﻿@model BusinessSolutions.MVC.Models.Order.AddOrderRequest
+﻿@model BusinessSolutions.MVC.Models.Order.OrderResponse
 @{
-    ViewData["Title"] = "Add Order Page";
+    ViewData["Title"] = "Update Order Page";
 }
 
 
@@ -9,7 +9,7 @@
         <h1>Add Order</h1>
         <form asp-action="Add" autocomplete="off">
             <div @*asp-validation-summary="ModelOnly"*@ class="text-danger"></div>
-            
+
             <div class="form-group">
                 <select class="option" asp-for="ProviderId">
                     <option value="0">Не указано</option>
@@ -23,18 +23,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control"/>
-                <span asp-validation-for="Number" class="text-danger"></span>
+                <input asp-for="Number" class="form-control" value="@Model.Number"/>
+                <span asp-validation-for="Number" class="text-danger" ></span>
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" type="date"/>
+                <input asp-for="Date" class="form-control" type="datetime" value="@Model.Date" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-            </div>          
+            </div>
             <div class="row mt-2">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <a asp-action="Add"><input type="submit" value="Submit" class="btn btn-primary w-100" /></a>
+                        <a asp-action="Update">
+                            <input type="submit"
+                                   value="Submit"
+                                   class="btn btn-primary w-100" />
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-6">

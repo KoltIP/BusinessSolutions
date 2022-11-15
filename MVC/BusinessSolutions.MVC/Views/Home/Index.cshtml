@@ -3,37 +3,7 @@
 @{
     ViewData["Title"] = "Main Page";
 }
-<script>
-    
-    
-    //function addProduct()
-    //{
-    //    let str = "1"
-    //    $.get("Add/" + str,
-    //   {
-    //        search: str.value
-    //   },
-    //   function(data) 
-    //   {
-    //        alert("успешно");
-    //   });
-    //}
-
-
-    function getOrders()
-    {
-        let str = "1"
-        $.get("getorders/",
-       {},
-       function(data) 
-       {
-            let length = data.length;
-            for (let i = 0; i < length; i++) 
-            {
-                alert(data[i].id);
-            }
-       });
-    }
+<script>  
 
 </script>
 
@@ -93,6 +63,15 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Date)
                         </td>  
+                        <td>                            
+                            <a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
+                                <div class="btn-group btn-group-sm">
+                                    <button type="submit" class="button-accept-filter">
+                                        <i class="far fa-trash-alt">Update</i>
+                                    </button>
+                                </div>
+                            </a>
+                        </td>
                     </tr>
                 }   
         </tbody>
