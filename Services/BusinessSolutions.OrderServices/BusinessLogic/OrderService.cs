@@ -59,6 +59,7 @@ namespace BusinessSolutions.OrderServices.BusinessLogic
         {
             var order = _dbContext.Orders.AsQueryable();
             order = order
+                        .Include(x => x.Provider)
                         .Skip(Math.Max(offset, 0))
                         .Take(Math.Max(0, Math.Min(limit, 1000)));
 
