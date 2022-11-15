@@ -9,7 +9,8 @@ namespace BusinessSolutions.MVC.Models.Order
     {
         public int Id { get; set; }
         public string Number { get; set; } = string.Empty;
-        public string Date { get; set; }
+        public string Date { get; set; } = string.Empty;
+        public int ProviderId { get; set; }
         public string ProviderName { get; set; } = string.Empty;
         public List<OrderItemResponse> Content {get;set;}
     }
