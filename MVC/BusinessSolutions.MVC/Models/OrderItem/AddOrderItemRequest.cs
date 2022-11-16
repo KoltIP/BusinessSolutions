@@ -1,23 +1,20 @@
 ﻿using AutoMapper;
-using BusinessSolutions.MVC.Models.Order;
 using BusinessSolutions.OrderItemServices.Models;
-using BusinessSolutions.OrderServices.Models;
 
-namespace BusinessSolutions.MVC.Models.OrderItem
+namespace BusinessSolutions.MVC.Models.OrderItem;
+
+public class AddOrderItemRequest
 {
-    public class AddOrderItemRequest
-    {
-        public string Name { get; set; } = string.Empty;
-        public decimal Quantity { get; set; }
-        public string Unit { get; set; } = string.Empty;
-        public int? OrderId { get; set; }
-    }
+    public string Name { get; set; } = string.Empty;
+    public decimal Quantity { get; set; }
+    public string Unit { get; set; } = string.Empty;
+    public int? OrderId { get; set; }
+}
 
-    public class AddOrderItemRequestProfile : Profile
+public class AddOrderItemRequestProfile : Profile
+{
+    public AddOrderItemRequestProfile()
     {
-        public AddOrderItemRequestProfile()
-        {
-            CreateMap<AddOrderItemRequest, AddOrderItemModel>();
-        }
+        CreateMap<AddOrderItemRequest, AddOrderItemModel>();
     }
 }

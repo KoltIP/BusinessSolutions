@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
-using BusinessSolutions.MVC.Models.OrderItem;
-using BusinessSolutions.OrderItemServices.Models;
 using BusinessSolutions.ProviderServices.Models;
 
-namespace BusinessSolutions.MVC.Models.Provider
-{
-    public class AddProviderRequest
-    {
-        public string Name { get; set; } = string.Empty;
-    }
+namespace BusinessSolutions.MVC.Models.Provider;
 
-    public class AddProviderRequestProfile : Profile
+public class AddProviderRequest
+{
+    public string Name { get; set; } = string.Empty;
+}
+
+public class AddProviderRequestProfile : Profile
+{
+    public AddProviderRequestProfile()
     {
-        public AddProviderRequestProfile()
-        {
-            CreateMap<AddProviderRequest, AddProviderModel>();
-        }
+        CreateMap<AddProviderRequest, AddProviderModel>();
     }
 }

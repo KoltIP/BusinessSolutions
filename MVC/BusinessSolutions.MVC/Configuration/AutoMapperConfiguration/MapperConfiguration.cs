@@ -2,23 +2,22 @@
 using BusinessSolutions.MVC.Models.OrderItem;
 using BusinessSolutions.MVC.Models.Provider;
 
-namespace BusinessSolutions.MVC.Configuration.AutoMapperConfiguration
+namespace BusinessSolutions.MVC.Configuration.AutoMapperConfiguration;
+
+public static class MapperConfiguration
 {
-    public static class MapperConfiguration
+    public static IServiceCollection AddAppAutoMapper(this IServiceCollection services)
     {
-        public static IServiceCollection AddAppAutoMapper(this IServiceCollection services)
-        {
-            services.AddAutoMapper(
-                typeof(AddOrderRequestProfile),
-                typeof(OrderResponseProfile),
-                typeof(UpdateOrderRequestProfile),
-                typeof(AddOrderItemRequestProfile),
-                typeof(OrderItemResponseProfile),
-                typeof(UpdateOrderItemRequestProfile),
-                typeof(ProviderResponseProfile),
-                typeof(AddProviderRequestProfile),
-                typeof(UpdateProviderRequestProfile));
-            return services;
-        }
+        services.AddAutoMapper(
+            typeof(AddOrderRequestProfile),
+            typeof(OrderResponseProfile),
+            typeof(UpdateOrderRequestProfile),
+            typeof(AddOrderItemRequestProfile),
+            typeof(OrderItemResponseProfile),
+            typeof(UpdateOrderItemRequestProfile),
+            typeof(ProviderResponseProfile),
+            typeof(AddProviderRequestProfile),
+            typeof(UpdateProviderRequestProfile));
+        return services;
     }
 }
