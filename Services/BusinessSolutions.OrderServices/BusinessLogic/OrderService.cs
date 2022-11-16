@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,6 +47,41 @@ namespace BusinessSolutions.OrderServices.BusinessLogic
             _dbContext.SaveChanges();
         }
 
+        public async Task<IEnumerable<OrderModel>> FilterOrders(int providerId, string startDate, string endDate)
+        {
+            var SD = Convert.ToDateTime(startDate);
+            var ED = Convert.ToDateTime(endDate);
+
+            IQueryable<Order> orders = _dbContext.Orders.AsQueryable();
+
+            orders = orders
+                .Include(x => x.Provider)
+                .Where(x => (x.ProviderId == providerId));
+
+            IEnumerable<Order> list = orders.ToList<Order>();
+            list = list
+                .Where(x => (x.Date >= SD))
+                .Where(x => (x.Date <= ED));
+
+            var data = list.Select(order => _mapper.Map<OrderModel>(order));
+            return data;
+        }
+
+        //public async Task<IEnumerable<OrderModel>> FilterOrders(int providerId, string startDate, string endDate)
+        //{
+        //    var SD = Convert.ToDateTime(startDate);
+        //    var ED = Convert.ToDateTime(endDate);
+
+        //    IQueryable<Order> orders = _dbContext.Orders.AsQueryable();
+
+        //    orders = orders
+        //        .Include(x => x.Provider)
+        //        .Where(x => (x.ProviderId == providerId));
+
+        //    var data = (orders.ToList()).Select(order => _mapper.Map<OrderModel>(order));
+        //    return data;
+        //}
+
         public async Task<OrderModel> GetOrder(int id)
         {
             var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id));
@@ -57,13 +93,13 @@ namespace BusinessSolutions.OrderServices.BusinessLogic
 
         public async Task<IEnumerable<OrderModel>> GetOrders(int offset = 0, int limit = 1000)
         {
-            var order = _dbContext.Orders.AsQueryable();
-            order = order
+            var orders = _dbContext.Orders.AsQueryable();
+            orders = orders
                         .Include(x => x.Provider)                        
                         .Skip(Math.Max(offset, 0))
                         .Take(Math.Max(0, Math.Min(limit, 1000)));
 
-            var data = (await order.ToListAsync()).Select(order => _mapper.Map<OrderModel>(order));
+            var data = (await orders.ToListAsync()).Select(order => _mapper.Map<OrderModel>(order));
             return data;
         }
 
