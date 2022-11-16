@@ -3,6 +3,7 @@ using System;
 using BusinessSolutions.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BusinessSolutions.Data.Context.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221116102437_fixId")]
+    partial class fixId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,6 +44,12 @@ namespace BusinessSolutions.Data.Context.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Date")
+                        .IsUnique();
+
+                    b.HasIndex("Number")
+                        .IsUnique();
 
                     b.HasIndex("ProviderId");
 
@@ -71,7 +80,16 @@ namespace BusinessSolutions.Data.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("Quantity")
+                        .IsUnique();
+
+                    b.HasIndex("Unit")
+                        .IsUnique();
 
                     b.ToTable("orderitems", (string)null);
                 });
@@ -89,6 +107,9 @@ namespace BusinessSolutions.Data.Context.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("providers", (string)null);
                 });

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BusinessSolutions.MVC.Models.Order;
+using BusinessSolutions.MVC.Models.Provider;
 using BusinessSolutions.OrderServices.BusinessLogic;
 using BusinessSolutions.OrderServices.Models;
+using BusinessSolutions.ProviderServices.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessSolutions.MVC.Controllers;
@@ -11,14 +13,16 @@ namespace BusinessSolutions.MVC.Controllers;
 public class UpdateOrderController : Controller
 {
     private readonly IMapper mapper;
-    private readonly ILogger<UpdateOrderController> _logger;
+    private readonly ILogger<UpdateOrderController> logger;
     private readonly IOrderService orderService;
+    private readonly IProviderService providerService;
 
-    public UpdateOrderController(IMapper mapper, ILogger<UpdateOrderController> logger, IOrderService orderService)
+    public UpdateOrderController(IMapper mapper, ILogger<UpdateOrderController> logger, IOrderService orderService, IProviderService providerService)
     {
         this.mapper = mapper;
-        _logger = logger;
+        this.logger = logger;
         this.orderService = orderService;
+        this.providerService = providerService;
     }
 
     [HttpGet("{id}")]
@@ -35,5 +39,13 @@ public class UpdateOrderController : Controller
         var model = mapper.Map<UpdateOrderModel>(request);
         await orderService.UpdateOrder(id,model);
         return Redirect("/");
+    }
+
+    [HttpGet("getproviders/")]
+    public async Task<IEnumerable<ProviderResponse>> GetProviders()
+    {
+        var models = await providerService.GetProviders();
+        var response = mapper.Map<IEnumerable<ProviderResponse>>(models);
+        return response;
     }
 }
