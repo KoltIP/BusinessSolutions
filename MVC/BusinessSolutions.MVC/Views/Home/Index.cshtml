@@ -4,9 +4,7 @@
     ViewData["Title"] = "Main Page";
 }
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script>  
-
-    
+<script>     
     
     function filter()
     {
@@ -96,34 +94,36 @@
             @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Number)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProviderName)
-                        </td>     
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>  
-                        <td>                            
-                            <a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
-                                <div class="btn-group btn-group-sm">
-                                    <button type="submit" class="button-accept-filter">
-                                        <i class="far fa-trash-alt">Update</i>
-                                    </button>
-                                </div>
-                            </a>
-                             <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
-                                <div class="btn-group btn-group-sm">
-                                    <button type="submit" class="button-accept-filter">
-                                        <i class="far fa-trash-alt">Delete</i>
-                                    </button>
-                                </div>
-                            </a>
-                        </td>
+                        <a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProviderName)
+                            </td>     
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>  
+                            <td>                            
+                                @*<a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="submit" class="button-accept-filter">
+                                            <i class="far fa-trash-alt">Update</i>
+                                        </button>
+                                    </div>
+                                </a>*@
+                                 <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="submit" class="button-accept-filter">
+                                            <i class="far fa-trash-alt">Delete</i>
+                                        </button>
+                                    </div>
+                                </a>
+                            </td>
+                        </a>
                     </tr>
                 }   
         </tbody>

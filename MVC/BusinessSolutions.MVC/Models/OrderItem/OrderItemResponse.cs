@@ -9,7 +9,7 @@ public class OrderItemResponse
     public string Name { get; set; } = string.Empty;
     public decimal Quantity { get; set; }
     public string Unit { get; set; } = string.Empty;
-    public int? OrderId { get; set; }
+    public int OrderId { get; set; }
     public string Order { get; set; }
 }
 

@@ -2,7 +2,25 @@
 @{
     ViewData["Title"] = "Add Order Page";
 }
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("error");
 
+        $.get("getproviders/",
+            {},
+            function (data) {
+                displayProviders(data);
+            })
+    })
+
+    function displayProviders(data) {
+        let length = data.length;
+        for (let i = 0; i < length; i++) {
+            $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+        }
+    }
+</script>
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
@@ -11,14 +29,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
             <div class="form-group">
-                <select class="option" asp-for="ProviderId">
-                    <option value="0">Не указано</option>
-                    <option value="1">Поставщик 1</option>
-                    <option value="2">Поставщик 2</option>
-                    <option value="3">Поставщик 3</option>
-                    <option value="4">Поставщик 4</option>
-                    <option value="5">Поставщик 5</option>
-                    <option value="6">Поставщик 6</option>
+                <select class="option" asp-for="ProviderId" id="providers">
+                    
                 </select>
             </div>
             <div class="form-group">

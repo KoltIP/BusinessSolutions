@@ -8,7 +8,7 @@ public class UpdateOrderRequest
 {
     public string Number { get; set; } = string.Empty;
     public DateTime Date { get; set; }
-    public int? ProviderId { get; set; }
+    public int ProviderId { get; set; }
     public List<OrderItemResponse> Content { get; set; }
 }
 
