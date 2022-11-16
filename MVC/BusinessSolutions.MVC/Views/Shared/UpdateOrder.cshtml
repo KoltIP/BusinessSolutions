@@ -5,8 +5,7 @@
 
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>
-    $(document).ready(function () {
-        
+    $(document).ready(function () {        
         $.get("getproviders/",
             {},
             function (data) {
@@ -20,12 +19,18 @@
             $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
         }
     }
+
+    function additem()
+    {
+        $("#content").append('<tr><td>'  + '</td><td>' +  '</td><td>'  + '</td><td>'  + '</td></tr>');
+    }
+
 </script>
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
         <h1>Edit Order</h1>
-        <form asp-action="Add" autocomplete="off">
+         <form asp-action="Add" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
@@ -43,12 +48,63 @@
                 <input asp-for="Date" class="form-control" type="datetime" value="@Model.Date" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
+            
+            <form action="">
+                @if (Model.Content != null)
+                {
+                    <table border="0" class="flex-content-item">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                                <th>@Html.DisplayNameFor(model => model.Content[0].Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.Content[0].Quantity)</th>
+                                <th>@Html.DisplayNameFor(model => model.Content[0].Order)</th>
+                                <th>@Html.DisplayNameFor(model => model.Content[0].Unit)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="content">
+                            @foreach (var item in Model.Content)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Order)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Unit)
+                                    </td>
+                                    <td>                               
+                                        <a asp-controller="UpdateOrder" asp-action="Delete" asp-route-id="@item.Id">
+                                            <div class="btn-group btn-group-sm">
+                                                <button type="submit" class="button-accept-filter">
+                                                    <i class="far fa-trash-alt">Delete</i>
+                                                </button>
+                                            </div>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }                       
+                        </tbody>
+                </table>
+            }
+            <button onclick="additem()">Add item</button>
+            </form>
+            
+
             <div class="row mt-2">
                 <div class="col-md-6">
                     <div class="form-group">
                         <a asp-action="Update">
                             <input type="submit"
-                                   value="Submit"
+                                   value="Save"
                                    class="btn btn-primary w-100" />
                         </a>
                     </div>
@@ -61,5 +117,7 @@
     </div>
 </div>
 @{
-
+    //Убрать форму и отправлять fromBody все параметры, и добавлять чисто импуты
+        //Осталось связка в БД и обновление + тоже самое запихнуть в Add
 }
+

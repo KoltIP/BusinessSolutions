@@ -18,13 +18,10 @@
                 startDate: jstartDate,
                 endDate: jendDate
             },
-            function (data) {
-                displayData(data);
-            }),
-            function ()
-            {
-                alert("error");
-            }
+            function(data) {
+                displayData(data)
+            })
+    
     }
 
     function displayData(data) {
@@ -32,31 +29,30 @@
         while (table.firstChild)
             table.removeChild(table.firstChild);
         let length = data.length;
-        for (let i = 0; i < length; i++) {
-            $("#content").append('<tr><td>' + data[i].id + '</td><td>' + data[i].number + '</td><td>' + data[i].providerName + '</td><td>' + data[i].date + '</td></tr>');
-        }
+        for (let i = 0; i < length; i++) 
+            $("#content").append('<tr><td>' + data[i].id + '</td><td>' + data[i].number + '</td><td>' + data[i].providerName + '</td><td>' + data[i].date + '</td></tr>');        
     }
 
 
-    $(document).ready(function () {
-        console.log("error");
+    $(document).ready(function() {        
 
         $.get("getproviders/",
             {},
-            function (data) {
+            function(data) 
+            {
                 displayProviders(data);
             })
-    })
+    });
 
     function displayProviders(data)
     {
         let length = data.length;
-        for (let i = 0; i < length; i++) {
-            $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
-        }
+        for (let i = 0; i < length; i++)        
+            $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');        
     }
 
 </script>
+
 <div class="flex-options">    
     <div class="flex-option-item">
         <select multiple class="option" id="providers">
@@ -92,40 +88,38 @@
         </thead>
         <tbody id="content">
             @foreach (var item in Model)
-                {
-                    <tr>
+            {   
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProviderName)
+                    </td>     
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>  
+                    <td>                            
                         <a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Number)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ProviderName)
-                            </td>     
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>  
-                            <td>                            
-                                @*<a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
-                                    <div class="btn-group btn-group-sm">
-                                        <button type="submit" class="button-accept-filter">
-                                            <i class="far fa-trash-alt">Update</i>
-                                        </button>
-                                    </div>
-                                </a>*@
-                                 <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
-                                    <div class="btn-group btn-group-sm">
-                                        <button type="submit" class="button-accept-filter">
-                                            <i class="far fa-trash-alt">Delete</i>
-                                        </button>
-                                    </div>
-                                </a>
-                            </td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="submit" class="button-accept-filter">
+                                    <i class="far fa-trash-alt">Open</i>
+                                </button>
+                            </div>
                         </a>
-                    </tr>
-                }   
+                            <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
+                            <div class="btn-group btn-group-sm">
+                                <button type="submit" class="button-accept-filter">
+                                    <i class="far fa-trash-alt">Delete</i>
+                                </button>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            }   
         </tbody>
       </table>     
 </div>
@@ -133,3 +127,4 @@
  <a href ="/AddOrder" class="btn btn-secondary">
     Добавить заказ
 </a>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
