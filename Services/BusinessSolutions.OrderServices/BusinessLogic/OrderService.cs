@@ -67,21 +67,6 @@ namespace BusinessSolutions.OrderServices.BusinessLogic
             return data;
         }
 
-        //public async Task<IEnumerable<OrderModel>> FilterOrders(int providerId, string startDate, string endDate)
-        //{
-        //    var SD = Convert.ToDateTime(startDate);
-        //    var ED = Convert.ToDateTime(endDate);
-
-        //    IQueryable<Order> orders = _dbContext.Orders.AsQueryable();
-
-        //    orders = orders
-        //        .Include(x => x.Provider)
-        //        .Where(x => (x.ProviderId == providerId));
-
-        //    var data = (orders.ToList()).Select(order => _mapper.Map<OrderModel>(order));
-        //    return data;
-        //}
-
         public async Task<OrderModel> GetOrder(int id)
         {
             var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id));
