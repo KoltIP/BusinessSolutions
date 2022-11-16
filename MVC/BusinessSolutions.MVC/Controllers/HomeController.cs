@@ -32,12 +32,12 @@ namespace BusinessSolutions.MVC.Controllers
             return View("Index", response);
         }
 
-        [HttpPost("filter")]
-        public async Task<IActionResult> Filter()
+        [HttpGet("filter/")]
+        public async Task<IEnumerable<OrderResponse>> Filter(int provider, string startDate, string endDate)
         {
-            var filteredModels = await orderService.GetOrders();
+            var filteredModels = await orderService.FilterOrders(provider,startDate,endDate);
             IEnumerable<OrderResponse> filteredResponse = mapper.Map<IEnumerable<OrderResponse>>(filteredModels);
-            return View("Index", filteredResponse);
+            return filteredResponse;
         }
          
         [HttpGet("getorders")]

@@ -4,37 +4,65 @@
     ViewData["Title"] = "Main Page";
 }
 <script>  
+    function filter()
+    {
+        let jprovider = $("#provider").val();
+        let jstartDate = $("#startDate").val();
+        let jendDate = $("#endDate").val();
+        
+        $.get("filter/",
+            {
+                provider: jprovider[0],
+                startDate: jstartDate,
+                endDate: jendDate
+            },
+            function (data) {
+                displayData(data);
+            }),
+            function ()
+            {
+                alert("error");
+            }
+    }
+
+    function displayData(data) {
+        let table = document.getElementById("content");
+        while (table.firstChild)
+            table.removeChild(table.firstChild);
+        let length = data.length;
+        for (let i = 0; i < length; i++) {
+            $("#content").append('<tr><td>' + data[i].id + '</td><td>' + data[i].number + '</td><td>' + data[i].providerName + '</td><td>' + data[i].date + '</td></tr>');
+        }
+    }
 
 </script>
-
-
-<div class="flex-options">
-
+<div class="flex-options">    
     <div class="flex-option-item">
-        <select class="option">
-          <option value="0">Не указано</option>
-          <option value="1">Синий</option>
-          <option value="2">Зеленый</option>
-          <option value="3">Желтый</option>
-          <option value="4">Красный</option>
-          <option value="5">Оранжевый</option>
-          <option value="6">Черный</option>
+        <select multiple class="option" id="provider">
+            <option value="0">Не указано</option>
+            <option value="1">Поставщик 1</option>
+            <option value="2">Поставщик 2</option>
+            <option value="3">Поставщик 3</option>
+            <option value="4">Поставщик 4</option>
+            <option value="5">Поставщик 5</option>
+            <option value="6">Поставщик 6</option>
         </select>
     </div>
 
     <div class="flex-option-item">
-        <input class="start-input" alt="Start with" placeholder="last date" type="date" value="" autocomplete="off" />
+        <input id="startDate" class="start-input" alt="Start with" placeholder="start date" type="date" value="" autocomplete="off" />
     </div>
 
     <div class="flex-option-item">
-        <input class="end-input" alt="End" placeholder="last date" type="date" value="" autocomplete="off" />
+        <input id="endDate" class="end-input" alt="End" placeholder="end date" type="date" value="" autocomplete="off" />
     </div>
 
     <div class="flex-option-item">
-        <button class="button-accept-filter">
+        <button class="button-accept-filter" onclick="filter()">
             Применить фильтры
         </button>
     </div>
+
 </div>
 
 <div class="flex-content">

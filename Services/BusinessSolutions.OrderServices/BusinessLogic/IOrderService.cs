@@ -14,5 +14,6 @@ namespace BusinessSolutions.OrderServices.BusinessLogic
         Task<OrderModel> AddOrder(AddOrderModel model);
         Task UpdateOrder(int id, UpdateOrderModel model);
         Task DeleteOrder(int id);
+        Task<IEnumerable<OrderModel>> FilterOrders(int providerId, string startDate, string endDate);
     }
 }
