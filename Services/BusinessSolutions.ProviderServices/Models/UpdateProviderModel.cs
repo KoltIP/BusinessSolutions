@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using BusinessSolutions.Data.Entities;
 
-namespace BusinessSolutions.ProviderServices.Models
+namespace BusinessSolutions.ProviderServices.Models;
+
+public class UpdateProviderModel
 {
-    public class UpdateProviderModel
+    public string Name { get; set; } = string.Empty;
+}
+
+public class UpdateProviderModelProfile : Profile
+{
+    public UpdateProviderModelProfile()
     {
-        public string Name { get; set; } = string.Empty;
+        CreateMap<UpdateProviderModel, Provider>();
     }
 }
+

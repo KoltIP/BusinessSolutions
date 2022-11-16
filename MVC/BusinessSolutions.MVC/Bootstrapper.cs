@@ -2,16 +2,15 @@
 using BusinessSolutions.OrderServices;
 using BusinessSolutions.ProviderServices;
 
-namespace BusinessSolutions.MVC
+namespace BusinessSolutions.MVC;
+
+public static class Bootstrapper
 {
-    public static class Bootstrapper
+    public static IServiceCollection AddAppServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddAppServices(this IServiceCollection services)
-        {
-            services.AddOrderService();
-            services.AddOrderItemService();
-            services.AddProviderService();
-            return services;
-        }
+        services.AddOrderService();
+        services.AddOrderItemService();
+        services.AddProviderService();
+        return services;
     }
 }

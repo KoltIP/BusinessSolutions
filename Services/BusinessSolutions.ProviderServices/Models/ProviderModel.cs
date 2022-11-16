@@ -1,32 +1,26 @@
 ﻿using AutoMapper;
 using BusinessSolutions.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BusinessSolutions.ProviderServices.Models
+namespace BusinessSolutions.ProviderServices.Models;
+
+public class ProviderModel
 {
-    public class ProviderModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-    }
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+}
 
-    public class ProviderModelProfile : Profile
+public class ProviderModelProfile : Profile
+{
+    public ProviderModelProfile()
     {
-        public ProviderModelProfile()
-        {
-            CreateMap<Provider, ProviderModel>();
-        }
+        CreateMap<Provider, ProviderModel>();
     }
+}
 
-    public class ProviderProfile : Profile
+public class ProviderProfile : Profile
+{
+    public ProviderProfile()
     {
-        public ProviderProfile()
-        {
-            CreateMap<ProviderModel, Provider>();
-        }
+        CreateMap<ProviderModel, Provider>();
     }
 }
