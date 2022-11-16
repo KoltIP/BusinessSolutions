@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using BusinessSolutions.MVC.Models;
 using BusinessSolutions.MVC.Models.Order;
+using BusinessSolutions.MVC.Models.Provider;
 using BusinessSolutions.OrderServices;
 using BusinessSolutions.OrderServices.BusinessLogic;
 using BusinessSolutions.OrderServices.Models;
+using BusinessSolutions.ProviderServices.BusinessLogic;
+using BusinessSolutions.ProviderServices.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,14 +17,16 @@ namespace BusinessSolutions.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly IMapper mapper;
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
         private readonly IOrderService orderService;
+        private readonly IProviderService providerService;
 
-        public HomeController(IMapper mapper, ILogger<HomeController> logger, IOrderService orderService)
+        public HomeController(IMapper mapper, ILogger<HomeController> logger, IOrderService orderService, IProviderService providerService)
         {
             this.mapper = mapper;
-            _logger = logger;
+            this.logger = logger;
             this.orderService = orderService;
+            this.providerService = providerService;
         }
 
         [HttpGet("")]
@@ -53,6 +58,14 @@ namespace BusinessSolutions.MVC.Controllers
         {
             await orderService.DeleteOrder(id);            
             return Redirect("/");
+        }
+
+        [HttpGet("getproviders/")]
+        public async Task<IEnumerable<ProviderResponse>> GetProviders()
+        {
+            var models = await providerService.GetProviders();
+            var response = mapper.Map<IEnumerable<ProviderResponse>>(models);
+            return response;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

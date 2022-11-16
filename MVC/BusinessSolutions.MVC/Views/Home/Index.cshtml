@@ -3,10 +3,14 @@
 @{
     ViewData["Title"] = "Main Page";
 }
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>  
+
+    
+    
     function filter()
     {
-        let jprovider = $("#provider").val();
+        let jprovider = $("#providers").val();
         let jstartDate = $("#startDate").val();
         let jendDate = $("#endDate").val();
         
@@ -35,17 +39,30 @@
         }
     }
 
+
+    $(document).ready(function () {
+        console.log("error");
+
+        $.get("getproviders/",
+            {},
+            function (data) {
+                displayProviders(data);
+            })
+    })
+
+    function displayProviders(data)
+    {
+        let length = data.length;
+        for (let i = 0; i < length; i++) {
+            $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+        }
+    }
+
 </script>
 <div class="flex-options">    
     <div class="flex-option-item">
-        <select multiple class="option" id="provider">
-            <option value="0">Не указано</option>
-            <option value="1">Поставщик 1</option>
-            <option value="2">Поставщик 2</option>
-            <option value="3">Поставщик 3</option>
-            <option value="4">Поставщик 4</option>
-            <option value="5">Поставщик 5</option>
-            <option value="6">Поставщик 6</option>
+        <select multiple class="option" id="providers">
+            
         </select>
     </div>
 

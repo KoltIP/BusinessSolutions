@@ -23,7 +23,7 @@ namespace BusinessSolutions.ProviderServices.BusinessLogic
 
         public async Task<IEnumerable<ProviderModel>> GetProviders(int offset = 0, int limit = 1000)
         {
-            var providers = _dbContext.Orders.AsQueryable();
+            var providers = _dbContext.Providers.AsQueryable();
             providers = providers
                         .Distinct()
                         .Skip(Math.Max(offset, 0))
