@@ -25,10 +25,18 @@ public class UpdateOrderController : Controller
         this.providerService = providerService;
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> IndexAsync([FromRoute] int id)
+    //[HttpGet("{id}")]
+    //public async Task<IActionResult> IndexAsync([FromRoute] int id)
+    //{
+    //    var model  = await orderService.GetOrder(id);
+    //    var response = mapper.Map<OrderResponse>(model);
+    //    return View("UpdateOrder", response);
+    //}
+
+    [HttpGet("")]
+    public async Task<IActionResult> IndexAsync(int id)
     {
-        var model  = await orderService.GetOrder(id);
+        var model = await orderService.GetOrder(id);
         var response = mapper.Map<OrderResponse>(model);
         return View("UpdateOrder", response);
     }
