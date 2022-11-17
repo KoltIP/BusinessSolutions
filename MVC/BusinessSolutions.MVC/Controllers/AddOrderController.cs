@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using BusinessSolutions.MVC.Models.Order;
+using BusinessSolutions.MVC.Models.OrderItem;
 using BusinessSolutions.MVC.Models.Provider;
+using BusinessSolutions.OrderItemServices.BusinessLogic;
+using BusinessSolutions.OrderItemServices.Models;
 using BusinessSolutions.OrderServices.BusinessLogic;
 using BusinessSolutions.OrderServices.Models;
 using BusinessSolutions.ProviderServices.BusinessLogic;
@@ -16,6 +19,7 @@ public class AddOrderController : Controller
     private readonly ILogger<AddOrderController> _logger;
     private readonly IOrderService orderService;
     private readonly IProviderService providerService;
+    private readonly IOrderItemService orderItemService;
 
     public AddOrderController(IMapper mapper, ILogger<AddOrderController> logger, IOrderService orderService, IProviderService providerService)
     {
@@ -31,8 +35,29 @@ public class AddOrderController : Controller
         return View("AddOrder");
     }
 
-    public async Task<IActionResult> Add(AddOrderRequest request)
+
+    [HttpPost("add/")]
+    public async Task<IActionResult> Add(int providerId, string number, string date, IEnumerable<AddOrderItemRequest> content)
     {
+        foreach (var contentElem in content)
+        {
+            AddOrderItemRequest item = new AddOrderItemRequest()
+            {
+                Name = contentElem.Name,
+                Quantity = contentElem.Quantity,
+                Unit = contentElem.Unit,
+                OrderId = contentElem.OrderId
+            };
+            var itemModel = mapper.Map<AddOrderItemModel>(item);
+            await orderItemService.AddOrderItem(itemModel);
+        }
+
+        AddOrderRequest request = new AddOrderRequest()
+        {
+            Number = number,
+            ProviderId = providerId,
+            Date = Convert.ToDateTime(date),            
+        };
         var model = mapper.Map<AddOrderModel>(request);
         await orderService.AddOrder(model);
         return Redirect("/");

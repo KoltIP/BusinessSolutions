@@ -3,6 +3,7 @@
     ViewData["Title"] = "Add Order Page";
 }
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script>
     $(document).ready(function () {        
 
@@ -19,12 +20,51 @@
             $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
         }
     }
+
+    function add() {
+        let jprovider = $("#providers").val();
+        let jnumber = $("#number").val();
+        let jdate = $("#date").val();
+        let jcontent = $("#content").children("div").children("input");
+        
+        let length = jcontent.length;
+        let contentArray = [];
+        
+        let item = {
+            name: jcontent[0].value,
+            Quantity: jcontent[1].value,
+            Unit: jcontent[2].value,
+            OrderId: 9     
+        }
+
+        contentArray[0] = item;
+
+        $.post("AddOrder/add/",
+        {   
+            providerId : jprovider,
+            number : jnumber,
+            date : jdate,
+            content: contentArray
+        },
+        function (data) {
+            $(location).attr('href','/');
+        })
+
+    }
+
+    function addItem() {
+        $("#content").prepend('<div class="row"><input type="text" placeholder="Name of item" value="" /><input type="text" placeholder="Quantity" value="" /><input type="text" placeholder="Unit" value="" /></div>');
+    }
+
+
 </script>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
         <h1>Add Order</h1>
-        <form asp-action="Add" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
             <div class="form-group">
@@ -34,25 +74,38 @@
             </div>
             <div class="form-group">
                 <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control"/>
+                <input asp-for="Number" class="form-control" id="number"/>
                 <span asp-validation-for="Number" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" type="date"/>
+                <input asp-for="Date" class="form-control" type="date" id="date"/>
                 <span asp-validation-for="Date" class="text-danger"></span>
-            </div>          
+            </div>       
+
+            <div id="content">
+
+            </div>
+            
+
+
+
             <div class="row mt-2">
                 <div class="col-md-6">
+
+                    <button onclick="addItem()">Add Item</button>
+
                     <div class="form-group">
-                        <a asp-action="Add"><input type="submit" value="Submit" class="btn btn-primary w-100" /></a>
+                        <input  value="Submit" type="submit" class="btn btn-primary w-100" onclick="add()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <a href="/" class="btn btn-secondary  w-100">View All</a>
                 </div>
             </div>
-        </form>
+        
+
+
     </div>
 </div>
 @{

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessSolutions.MVC.Models.Order;
+using BusinessSolutions.MVC.Models.OrderItem;
 using BusinessSolutions.MVC.Models.Provider;
 using BusinessSolutions.OrderServices.BusinessLogic;
 using BusinessSolutions.OrderServices.Models;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessSolutions.MVC.Controllers;
 
-[Route("/UpdateOrder")]
+[Route("UpdateOrder")]
 [ApiVersion("1.0")]
 public class UpdateOrderController : Controller
 {
@@ -41,9 +42,15 @@ public class UpdateOrderController : Controller
         return View("UpdateOrder", response);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateOrderRequest request)
+    [HttpPost("update/")]
+    public async Task<IActionResult> Update( int id, int providerid,string number, string date, IEnumerable<AddOrderItemRequest> content) 
     {
+        UpdateOrderRequest request = new UpdateOrderRequest()
+        {
+            ProviderId = providerid,
+            Number = number,
+            Date = Convert.ToDateTime(date),
+        };
         var model = mapper.Map<UpdateOrderModel>(request);
         await orderService.UpdateOrder(id,model);
         return Redirect("/");
