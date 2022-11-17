@@ -1,4 +1,7 @@
-﻿namespace BusinessSolutions.OrderItemServices.Models;
+﻿using AutoMapper;
+using BusinessSolutions.Data.Entities;
+
+namespace BusinessSolutions.OrderItemServices.Models;
 
 public class AddOrderItemModel
 {
@@ -6,4 +9,12 @@ public class AddOrderItemModel
     public decimal Quantity { get; set; }
     public string Unit { get; set; } = string.Empty;
     public int OrderId { get; set; }
+}
+
+public class AddOrderItemModelProfile : Profile
+{
+    public AddOrderItemModelProfile()
+    {
+        CreateMap<AddOrderItemModel, OrderItem>();
+    }
 }

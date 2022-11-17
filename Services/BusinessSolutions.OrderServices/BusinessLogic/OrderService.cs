@@ -84,9 +84,8 @@ public class OrderService : IOrderService
     {
         //updateOrderModelValidator.Check(model);
 
-        var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id));
-        ;// ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
-
+        var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
+        // ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
         order = _mapper.Map(model, order);
 
         _dbContext.Orders.Update(order);
