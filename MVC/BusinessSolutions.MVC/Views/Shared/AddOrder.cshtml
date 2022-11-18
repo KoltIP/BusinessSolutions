@@ -64,7 +64,7 @@
 
     let index =0;
     function addItem() {
-        $("#content").prepend('<div class="row" id=index><input type="text" placeholder="Name of item" value="" /><input type="text" placeholder="Quantity" value="" /><input type="text" placeholder="Unit" value="" /><button onclick="deleteItem(this)">Delete</button></div>');
+        $("#content").prepend('<div class="row" style="margin:20px;border:solid 1px;"><input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Name of item" value="" /><input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Quantity" value="" /><input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Unit" value="" /><button style="margin-top:5px;margin-bottom:5px;" onclick="deleteItem(this)">Delete</button></div>');
         index++;
     }
 
@@ -76,6 +76,8 @@
 
 </script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
 
 
 
@@ -105,15 +107,13 @@
             <div id="content">
 
             </div>
-            
 
-
+            <div class="row">
+                <button  style="margin-top:20px; margin-bottom:20px; border-radius:12px; padding-left:5px;padding-right:5px;" onclick="addItem()">Add Item</button>
+            </div>
 
             <div class="row mt-2">
-                <div class="col-md-6">
-
-                    <button onclick="addItem()">Add Item</button>
-
+                <div class="col-md-6">                   
                     <div class="form-group">
                         <input  value="Submit" type="submit" class="btn btn-primary w-100" onclick="add()"/>
                     </div>
