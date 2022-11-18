@@ -22,7 +22,8 @@ public class ProviderService : IProviderService
         providers = providers
                     .Distinct()
                     .Skip(Math.Max(offset, 0))
-                    .Take(Math.Max(0, Math.Min(limit, 1000)));
+                    .Take(Math.Max(0, Math.Min(limit, 1000)))
+                    .OrderBy(x=>x.Name);
 
         var data = (await providers.ToListAsync()).Select(order => _mapper.Map<ProviderModel>(order));
         return data;
