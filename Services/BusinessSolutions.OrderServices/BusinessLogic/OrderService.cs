@@ -24,6 +24,7 @@ public class OrderService : IOrderService
         //addOrderModelValidator.Check(model);
 
         var order = _mapper.Map<Order>(model);
+        order.Date = order.Date.Date.AddDays(1);
         await _dbContext.Orders.AddAsync(order);
         _dbContext.SaveChanges();
 
