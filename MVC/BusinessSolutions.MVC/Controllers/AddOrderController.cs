@@ -16,17 +16,18 @@ namespace BusinessSolutions.MVC.Controllers;
 public class AddOrderController : Controller
 {
     private readonly IMapper mapper;
-    private readonly ILogger<AddOrderController> _logger;
+    private readonly ILogger<AddOrderController> logger;
     private readonly IOrderService orderService;
     private readonly IProviderService providerService;
     private readonly IOrderItemService orderItemService;
 
-    public AddOrderController(IMapper mapper, ILogger<AddOrderController> logger, IOrderService orderService, IProviderService providerService)
+    public AddOrderController(IMapper mapper, ILogger<AddOrderController> logger, IOrderService orderService, IProviderService providerService, IOrderItemService orderItemService)
     {
         this.mapper = mapper;
-        _logger = logger;
+        this.logger = logger;
         this.orderService = orderService;
         this.providerService = providerService;
+        this.orderItemService = orderItemService;
     }
 
     [HttpGet("")]
@@ -38,20 +39,7 @@ public class AddOrderController : Controller
 
     [HttpPost("add/")]
     public async Task<IActionResult> Add(int providerId, string number, string date, IEnumerable<AddOrderItemRequest> content)
-    {
-        foreach (var contentElem in content)
-        {
-            AddOrderItemRequest item = new AddOrderItemRequest()
-            {
-                Name = contentElem.Name,
-                Quantity = contentElem.Quantity,
-                Unit = contentElem.Unit,
-                OrderId = contentElem.OrderId
-            };
-            var itemModel = mapper.Map<AddOrderItemModel>(item);
-            await orderItemService.AddOrderItem(itemModel);
-        }
-
+    {        
         AddOrderRequest request = new AddOrderRequest()
         {
             Number = number,
@@ -59,7 +47,21 @@ public class AddOrderController : Controller
             Date = Convert.ToDateTime(date),            
         };
         var model = mapper.Map<AddOrderModel>(request);
-        await orderService.AddOrder(model);
+        var order = mapper.Map<OrderResponse>(await orderService.AddOrder(model));
+
+        foreach (var contentElem in content)
+        {
+            AddOrderItemRequest item = new AddOrderItemRequest()
+            {
+                Name = contentElem.Name,
+                Quantity = contentElem.Quantity,
+                Unit = contentElem.Unit,
+                OrderId = order.Id
+            };
+            var itemModel = mapper.Map<AddOrderItemModel>(item);
+            await orderItemService.AddOrderItem(itemModel);
+        }
+
         return Redirect("/");
     }
 

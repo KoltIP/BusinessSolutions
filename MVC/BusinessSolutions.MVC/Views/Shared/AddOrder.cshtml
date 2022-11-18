@@ -30,14 +30,24 @@
         let length = jcontent.length;
         let contentArray = [];
         
-        let item = {
-            name: jcontent[0].value,
-            Quantity: jcontent[1].value,
-            Unit: jcontent[2].value,
-            OrderId: 9     
-        }
+        let i=1;
+        let j=0;
+        let step = 2;
+        while(i<length)
+        {
+            let item = {
+                name: jcontent[i-1].value,
+                Quantity: jcontent[i].value,
+                Unit: jcontent[i+1].value,
+                OrderId: 0     
+            }            
+            contentArray[j] = item;
+            j++;
+            if (i == 1)
+                step++;
+            i = i + step;
+        }       
 
-        contentArray[0] = item;
 
         $.post("AddOrder/add/",
         {   
