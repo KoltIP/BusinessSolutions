@@ -62,13 +62,22 @@
 
     }
 
+    let index =0;
     function addItem() {
-        $("#content").prepend('<div class="row"><input type="text" placeholder="Name of item" value="" /><input type="text" placeholder="Quantity" value="" /><input type="text" placeholder="Unit" value="" /></div>');
+        $("#content").prepend('<div class="row" id=index><input type="text" placeholder="Name of item" value="" /><input type="text" placeholder="Quantity" value="" /><input type="text" placeholder="Unit" value="" /><button onclick="deleteItem(this)">Delete</button></div>');
+        index++;
+    }
+
+
+    function deleteItem(button){
+        button.parentNode.remove();
     }
 
 
 </script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
 
 
 
