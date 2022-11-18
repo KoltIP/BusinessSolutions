@@ -102,7 +102,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>  
-                    <td>                            
+                    <td class="row">                            
                         <a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
                             <div class="btn-group btn-group-sm">
                                 <button type="submit" class="button-accept-filter">
@@ -110,7 +110,7 @@
                                 </button>
                             </div>
                         </a>
-                            <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
+                        <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
                             <div class="btn-group btn-group-sm">
                                 <button type="submit" class="button-accept-filter">
                                     <i class="far fa-trash-alt">Delete</i>
