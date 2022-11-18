@@ -31,7 +31,7 @@ public class UpdateOrderController : Controller
         this.orderItemService = orderItemService;
     }
 
-    [HttpGet("")]
+    [HttpGet("open")]
     public async Task<IActionResult> IndexAsync(int id)
     {       
         
@@ -49,14 +49,14 @@ public class UpdateOrderController : Controller
     [HttpPost("update/")]
     public async Task<IActionResult> Update( int id, int providerid, string number, string date, IEnumerable<AddOrUpdateOrderItemRequest> content) 
     {
-        //UpdateOrderRequest request = new UpdateOrderRequest()
-        //{
-        //    ProviderId = providerid,
-        //    Number = number,
-        //    Date = Convert.ToDateTime(date),
-        //};
-        //var model = mapper.Map<UpdateOrderModel>(request);
-        //await orderService.UpdateOrder(id,model);
+        UpdateOrderRequest request = new UpdateOrderRequest()
+        {
+            ProviderId = providerid,
+            Number = number,
+            Date = Convert.ToDateTime(date),
+        };
+        var model = mapper.Map<UpdateOrderModel>(request);
+        await orderService.UpdateOrder(id, model);
 
         var itemsModels = (content.ToList()).Select(order => mapper.Map<AddOrUpdateOrderItemModel>(order));
         await orderItemService.AddOrUpdateOrderItem(itemsModels);

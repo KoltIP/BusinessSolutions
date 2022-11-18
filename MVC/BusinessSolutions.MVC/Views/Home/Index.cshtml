@@ -51,6 +51,12 @@
             $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');        
     }
 
+    function openOrder(orderId)
+    {
+        var url = 'UpdateOrder/open' + '?id=' + orderId;
+        window.location.replace(url);
+    }
+
 </script>
 
 <div class="flex-options">    
@@ -87,9 +93,10 @@
            </tr>
         </thead>
         <tbody id="content">
+            
             @foreach (var item in Model)
-            {   
-                <tr>
+            {                
+                <tr onclick="openOrder(@item.Id)">
                     <td>
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
@@ -102,14 +109,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>  
-                    <td class="row">                            
-                        <a asp-controller="UpdateOrder" asp-action="Index" asp-route-id="@item.Id">
-                            <div class="btn-group btn-group-sm">
-                                <button type="submit" class="button-accept-filter">
-                                    <i class="far fa-trash-alt">Open</i>
-                                </button>
-                            </div>
-                        </a>
+                    <td class="row">
                         <a asp-controller="Home" asp-action="DeleteOrder" asp-route-id="@item.Id">
                             <div class="btn-group btn-group-sm">
                                 <button type="submit" class="button-accept-filter">
