@@ -14,7 +14,8 @@ public static class Bootstrapper
             typeof(AddOrderItemModelProfile),
             typeof(OrderItemModelProfile),
             typeof(OrderItemProfile),
-            typeof(UpdateOrderItemModelProfile)
+            typeof(UpdateOrderItemModelProfile),
+            typeof(AddOrUpdateOrderItemModelProfile)
             );
 
         return services;

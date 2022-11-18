@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration.Conventions;
 using BusinessSolutions.Data.Context;
 using BusinessSolutions.Data.Entities;
 using BusinessSolutions.OrderItemServices.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace BusinessSolutions.OrderItemServices.BusinessLogic;
 
@@ -24,6 +26,30 @@ public class OrderItemService : IOrderItemService
         _dbContext.SaveChanges();
 
         return _mapper.Map<OrderItemModel>(orderItem);
+    }
+
+    public async Task AddOrUpdateOrderItem(IEnumerable<AddOrUpdateOrderItemModel> models)
+    {
+        _dbContext.OrderItems.RemoveRange(_dbContext.OrderItems.Where(x => x.OrderId == models.Last().OrderId));
+        _dbContext.SaveChanges();
+        foreach (var model in models)
+        {
+            var entity = _dbContext.OrderItems.FirstOrDefaultAsync(x => x.Id == model.Id).Result;
+            if (entity == null)
+            {
+                var orderItem = _mapper.Map<OrderItem>(model);
+                await _dbContext.OrderItems.AddAsync(orderItem);
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                // ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
+                entity = _mapper.Map(model, entity);
+
+                _dbContext.OrderItems.Update(entity);
+                _dbContext.SaveChanges();
+            }
+        }
     }
 
     public async Task DeleteOrderItemModel(int id)
@@ -55,15 +81,13 @@ public class OrderItemService : IOrderItemService
         return data;
     }
 
-    public async Task UpdateOrderItemModel(int id, UpdateOrderItemModel model)
+    public async Task<IEnumerable<OrderItemModel>> GetOrderItemsByOrderId(int orderId)
     {
-        //updateOrderModelValidator.Check(model);
+        var orderItems = _dbContext.OrderItems.AsQueryable();
+        orderItems = orderItems.Where(x => x.OrderId.Equals(orderId));
 
-        var orderItems = await _dbContext.OrderItems.FirstOrDefaultAsync(x => x.Id == id);
-        // ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
-        orderItems = _mapper.Map(model, orderItems);
-
-        _dbContext.OrderItems.Update(orderItems);
-        _dbContext.SaveChanges();
+        var data = (await orderItems.ToListAsync()).Select(order => _mapper.Map<OrderItemModel>(order));
+        return data;
     }
+
 }

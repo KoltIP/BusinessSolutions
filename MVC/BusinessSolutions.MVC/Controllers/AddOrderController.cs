@@ -62,7 +62,7 @@ public class AddOrderController : Controller
             await orderItemService.AddOrderItem(itemModel);
         }
 
-        return Redirect("/");
+        return Ok();
     }
 
     [HttpGet("getproviders/")]

@@ -62,7 +62,7 @@ public class OrderService : IOrderService
     public async Task<OrderModel> GetOrder(int id)
     {
         var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id));
-
+        
         var data = _mapper.Map<OrderModel>(order);
 
         return data;
