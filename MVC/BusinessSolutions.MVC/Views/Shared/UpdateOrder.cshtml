@@ -12,30 +12,48 @@
         let jprovider = $("#providers").val();
         let jnumber = $("#number").val();
         let jdate = $("#date").val();
-        let jcontent = $("#content").val();
+        let jcontent = $("#content").children("div").children("input");
 
-        let jrequest = {
-            ProviderId: jprovider,
-            Number: jnumber,
-            Date: jdate,
-            Content: jcontent
-        };
+        let length = jcontent.length;
+        let contentArray = [];
 
-        let modelId = @Model.Id;
-        console.log(modelId);
+        let i = 1;
+        let j = 0;
+        let step = 2;
+        while (i < length) {
+            let item = {
+                name: jcontent[i - 1].value,
+                Quantity: jcontent[i].value,
+                Unit: jcontent[i + 1].value,
+                OrderId: @Model.Id 
+            }
+            contentArray[j] = item;
+            j++;
+            if (i == 1)
+                step++;
+            i = i + step;
+        }
 
         $.post("UpdateOrder/update/",
-        {   
-            id: modelId,
+        {
+            id: @Model.Id,
             providerId: jprovider,
             number: jnumber,
             date: jdate,
-            content: jcontent
-            
+            content: contentArray
         },
         function (data) {
-            $(location).attr('href','/');
+            $(location).attr('href', '/');
         })
+    }
+
+    function addItem() {
+        $("#content").prepend('<div id="" class="row" style="margin:20px;border:solid 1px;"><input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Name of item" value="" /><input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Quantity" value="" /><input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Unit" value="" /><button style="margin-top:5px;margin-bottom:5px;" onclick="deleteItem(this)">Delete</button></div>');
+    }
+
+
+    function deleteItem(button) {
+        button.parentNode.remove();
     }
 
     $(document).ready(function () {        
@@ -77,35 +95,33 @@
                 <input asp-for="Date" class="form-control" type="datetime" value="@Model.Date" id="date" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
-            
-           <div id="content" class="form-group">
-                @if (Model.Content != null)
-                {
-                    int i = 0;
-                    @foreach (var item in Model.Content)
-                    {
-                        <input asp-for="Content[i]" class="form-control" value="@Model.Content[i]" id="content_@i" />
-                    }  
-                }
-            </div>
-            <button >Add item</button>
-            
-            
-            
 
-            <div class="row mt-2">
-                <div class="col-md-6">
-                    <div class="form-group">
-                            <input type="submit"
-                                   value="Save"
-                                   class="btn btn-primary w-100" 
-                                   onclick="saveChanges()"/>
-                    </div>
+        <div id="content">
+            @foreach(var item in Model.Content)
+            {
+                <div id="@item.Id" class="row" style="margin:20px;border:solid 1px;">
+                    <input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Name of item" value="@item.Name" />
+                    <input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Quantity" value="@item.Quantity" />
+                    <input style="margin-top:5px;margin-bottom:5px;" type="text" placeholder="Unit" value="@item.Unit" />
+                    <button style="margin-top:5px;margin-bottom:5px;" onclick="deleteItem(this)">Delete</button>
                 </div>
-                <div class="col-md-6">
-                    <a href="/" class="btn btn-secondary  w-100">View All</a>
+            }
+        </div>
+
+        <div class="row">
+            <button style="margin-top:20px; margin-bottom:20px; border-radius:12px; padding-left:5px;padding-right:5px;" onclick="addItem()">Add Item</button>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input value="Submit" type="submit" class="btn btn-primary w-100" onclick="saveChanges()" />
                 </div>
             </div>
+            <div class="col-md-6">
+                <a href="/" class="btn btn-secondary  w-100">View All</a>
+            </div>
+        </div>
         
     </div>
 </div>
