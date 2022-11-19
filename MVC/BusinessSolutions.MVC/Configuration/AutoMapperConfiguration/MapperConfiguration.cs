@@ -14,7 +14,6 @@ public static class MapperConfiguration
             typeof(UpdateOrderRequestProfile),
             typeof(AddOrderItemRequestProfile),
             typeof(OrderItemResponseProfile),
-            typeof(UpdateOrderItemRequestProfile),
             typeof(ProviderResponseProfile),
             typeof(AddProviderRequestProfile),
             typeof(UpdateProviderRequestProfile));

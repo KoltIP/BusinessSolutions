@@ -21,6 +21,11 @@ public class OrderItemService : IOrderItemService
 
     public async Task<OrderItemModel> AddOrderItem(AddOrderItemModel model)
     {
+        AddOrderItemModelValidator validationRules = new AddOrderItemModelValidator();
+        var result = validationRules.Validate(model);
+        if (!result.IsValid)
+            throw new Exception("Невалидный");
+
         var orderItem = _mapper.Map<OrderItem>(model);
         await _dbContext.OrderItems.AddAsync(orderItem);
         _dbContext.SaveChanges();
@@ -34,9 +39,16 @@ public class OrderItemService : IOrderItemService
         _dbContext.SaveChanges();
         foreach (var model in models)
         {
+            AddOrUpdateOrderItemModelValidator validationRules = new AddOrUpdateOrderItemModelValidator();
+            var result = validationRules.Validate(model);
+            if (!result.IsValid)
+                throw new Exception("Невалидный");
+
             var order = _dbContext.Orders.FirstOrDefault(x => x.Id == model.OrderId);
+
             if (order.Number == model.Name)
                 throw new Exception("Предметная область");
+
             var entity = _dbContext.OrderItems.FirstOrDefaultAsync(x => x.Id == model.Id).Result;
             if (entity == null)
             {
@@ -46,7 +58,6 @@ public class OrderItemService : IOrderItemService
             }
             else
             {
-                // ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
                 entity = _mapper.Map(model, entity);
 
                 _dbContext.OrderItems.Update(entity);
