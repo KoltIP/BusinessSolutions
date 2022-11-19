@@ -2,7 +2,9 @@
 using BusinessSolutions.Data.Context;
 using BusinessSolutions.Data.Entities;
 using BusinessSolutions.OrderServices.Models;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BusinessSolutions.OrderServices.BusinessLogic;
 
@@ -21,6 +23,10 @@ public class OrderService : IOrderService
 
     public async Task<OrderModel> AddOrder(AddOrderModel model)
     {
+        AddOrderModelValidator validationRules = new AddOrderModelValidator();
+        var result = validationRules.Validate(model);
+        if (!result.IsValid)
+            throw new Exception("Невалидный");
         var order = _mapper.Map<Order>(model);
         order.Date = order.Date.Date.AddDays(1);
 
@@ -29,7 +35,7 @@ public class OrderService : IOrderService
             throw new Exception("Предметная область");
         await _dbContext.Orders.AddAsync(order);
         _dbContext.SaveChanges();
-        
+
         return _mapper.Map<OrderModel>(order);
     }
 
@@ -85,7 +91,10 @@ public class OrderService : IOrderService
 
     public async Task UpdateOrder(int id, UpdateOrderModel model)
     {
-        //updateOrderModelValidator.Check(model);
+        UpdateOrderModelValidator validationRules = new UpdateOrderModelValidator();
+        var result = validationRules.Validate(model);
+        if (!result.IsValid)
+            throw new Exception("Невалидный");
 
         var order =_dbContext.Orders.FirstOrDefault(x => x.Id.Equals(id));
         // ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");

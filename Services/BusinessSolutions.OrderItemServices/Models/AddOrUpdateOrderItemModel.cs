@@ -27,23 +27,23 @@ public class AddOrUpdateOrderItemModelProfile : Profile
     }
 }
 
-//public class AddOrUpdateOrderItemModelValidator : AbstractValidator<AddOrUpdateOrderItemModel>
-//{
-//    public AddOrUpdateOrderItemModelValidator()
-//    {
-//        RuleFor(x => x.Name)
-//            .NotEmpty().WithMessage("Name is required.")
-//            .NotNull().WithMessage("Name can not be null")
-//            .MaximumLength(50).WithMessage("Name is long.");
-//        RuleFor(x => x.Quantity)
-//           .NotEmpty().WithMessage("Quantity is required.");
-//        RuleFor(x => x.Unit)
-//           .NotEmpty().WithMessage("Unit is required.")
-//           .NotNull().WithMessage("Unit can not be null")
-//           .MaximumLength(50).WithMessage("Unit is long.");
-//        RuleFor(x => x.OrderId)
-//           .NotEmpty().WithMessage("OrderId is required.")
-//           .NotEqual(x => 0);
+public class AddOrUpdateOrderItemModelValidator : AbstractValidator<AddOrUpdateOrderItemModel>
+{
+    public AddOrUpdateOrderItemModelValidator()
+    {
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Name is required.")
+            .NotNull().WithMessage("Name can not be null")
+            .MaximumLength(50).WithMessage("Name is long.");
+        RuleFor(x => x.Quantity)
+           .NotEmpty().WithMessage("Quantity is required.");
+        RuleFor(x => x.Unit)
+           .NotEmpty().WithMessage("Unit is required.")
+           .NotNull().WithMessage("Unit can not be null")
+           .MaximumLength(50).WithMessage("Unit is long.");
+        RuleFor(x => x.OrderId)
+           .NotEmpty().WithMessage("OrderId is required.")
+           .NotEqual(x => 0);
 
-//    }
-//}
+    }
+}
