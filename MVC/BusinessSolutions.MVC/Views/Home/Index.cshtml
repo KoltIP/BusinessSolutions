@@ -67,11 +67,11 @@
     </div>
 
     <div class="flex-option-item">
-        <input id="startDate" class="start-input" alt="Start with" placeholder="start date" type="date" value="" autocomplete="off" />
+        <input id="startDate" class="start-input" alt="Start with" placeholder="start date" value="@DateOnly.Parse(DateTime.Today.Date.AddDays(-30).ToString("D"))" autocomplete="off" />
     </div>
 
     <div class="flex-option-item">
-        <input id="endDate" class="end-input" alt="End" placeholder="end date" type="date" value="" autocomplete="off" />
+        <input id="endDate" class="end-input" alt="End" placeholder="end date" value="@DateOnly.Parse(DateTime.Today.Date.ToString("D"))" autocomplete="off" />
     </div>
 
     <div class="flex-option-item">
