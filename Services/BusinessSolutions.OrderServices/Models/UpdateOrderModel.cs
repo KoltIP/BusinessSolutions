@@ -31,7 +31,9 @@ public class UpdateOrderModelProfile : Profile
 {
     public UpdateOrderModelProfile()
     {
-        CreateMap<UpdateOrderModel, Order>();
+        CreateMap<UpdateOrderModel, Order>()
+               .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToUniversalTime()));
     }
 }
+
 

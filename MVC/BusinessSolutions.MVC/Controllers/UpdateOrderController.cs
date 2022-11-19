@@ -58,7 +58,7 @@ public class UpdateOrderController : Controller
         var model = mapper.Map<UpdateOrderModel>(request);
         await orderService.UpdateOrder(id, model);
 
-        var itemsModels = (content.ToList()).Select(order => mapper.Map<AddOrUpdateOrderItemModel>(order));
+        var itemsModels = (content.ToList()).Select(item => mapper.Map<AddOrUpdateOrderItemModel>(item));
         await orderItemService.AddOrUpdateOrderItem(itemsModels);
         
 
