@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessSolutions.Data.Entities;
+using FluentValidation;
 
 namespace BusinessSolutions.OrderServices.Models;
 
