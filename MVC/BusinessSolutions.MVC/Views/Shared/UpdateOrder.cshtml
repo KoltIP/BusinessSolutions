@@ -56,13 +56,34 @@
         button.parentNode.remove();
     }
 
-    $(document).ready(function () {        
+    //$(document).ready(function () {        
+    //    $.get("getproviders/",
+    //        {},
+    //        function (data) {
+    //            displayProviders(data);
+    //        })
+    //})
+
+    $(document).ready(function () {
         $.get("getproviders/",
             {},
             function (data) {
-                displayProviders(data);
+                let provider = @Model.ProviderId;
+                let length = data.length;
+                for(let i=0;i<length;i++)
+                    if (data[i].id == provider)
+                        $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>')
             })
     })
+
+    function getProviders()
+    {
+        $.get("getproviders/",
+                {},
+                function (data) {
+                    displayProviders(data);
+                })
+    }
 
     function displayProviders(data) {
         let length = data.length;
@@ -81,7 +102,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <select class="option" asp-for="ProviderId" id="providers">
+                <select class="option" asp-for="ProviderId" id="providers" onclick="getProviders()">
                     
                 </select>
             </div>

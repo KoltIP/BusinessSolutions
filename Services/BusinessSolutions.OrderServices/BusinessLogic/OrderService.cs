@@ -85,11 +85,14 @@ public class OrderService : IOrderService
     {
         //updateOrderModelValidator.Check(model);
 
-        var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
+        var order =_dbContext.Orders.FirstOrDefault(x => x.Id.Equals(id));
         // ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
-        order = _mapper.Map(model, order);
+        if (order != null)
+        {
+            order = _mapper.Map(model, order);
 
-        _dbContext.Orders.Update(order);
-        _dbContext.SaveChanges();
+            _dbContext.Orders.Update(order);
+            _dbContext.SaveChanges();
+        }
     }
 }
