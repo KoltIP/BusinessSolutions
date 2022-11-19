@@ -56,14 +56,6 @@
         button.parentNode.remove();
     }
 
-    //$(document).ready(function () {        
-    //    $.get("getproviders/",
-    //        {},
-    //        function (data) {
-    //            displayProviders(data);
-    //        })
-    //})
-
     $(document).ready(function () {
         $.get("getproviders/",
             {},
@@ -84,8 +76,14 @@
                     displayProviders(data);
                 })
     }
+   
+    function displayProviders(data) 
+    {        
+        providers = $("#providers");
+        for (let i = 0; i < providers.children().length; i++) {
+            providers.childrenNode.remove();
+        }
 
-    function displayProviders(data) {
         let length = data.length;
         for (let i = 0; i < length; i++) {
             $("#providers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
