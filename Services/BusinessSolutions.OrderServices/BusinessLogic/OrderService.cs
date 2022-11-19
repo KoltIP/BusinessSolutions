@@ -11,7 +11,7 @@ public class OrderService : IOrderService
 
     private readonly IMapper _mapper;
     private readonly ApplicationDbContext _dbContext;
-    
+
     public OrderService(ApplicationDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
@@ -21,13 +21,15 @@ public class OrderService : IOrderService
 
     public async Task<OrderModel> AddOrder(AddOrderModel model)
     {
-        //addOrderModelValidator.Check(model);
-
         var order = _mapper.Map<Order>(model);
         order.Date = order.Date.Date.AddDays(1);
+
+        var check = _dbContext.Orders.FirstOrDefault(x => (x.Number == order.Number && x.ProviderId == order.ProviderId));
+        if (check != null)
+            throw new Exception("Предметная область");
         await _dbContext.Orders.AddAsync(order);
         _dbContext.SaveChanges();
-
+        
         return _mapper.Map<OrderModel>(order);
     }
 

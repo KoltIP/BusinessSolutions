@@ -34,6 +34,9 @@ public class OrderItemService : IOrderItemService
         _dbContext.SaveChanges();
         foreach (var model in models)
         {
+            var order = _dbContext.Orders.FirstOrDefault(x => x.Id == model.OrderId);
+            if (order.Number == model.Name)
+                throw new Exception("Предметная область");
             var entity = _dbContext.OrderItems.FirstOrDefaultAsync(x => x.Id == model.Id).Result;
             if (entity == null)
             {
