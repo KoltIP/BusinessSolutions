@@ -61,7 +61,7 @@
             }).fail(
             function(data){
                     console.log(data);
-                    $('#main').prepend('<div class="alert"><span class="closebtn" onclick="this.parentElement.style.display=' + "'none'"+';">&times;</span>' + data.responseText + '+</div>');
+                    $('#main').prepend('<div class="alert"><span class="closebtn" onclick="this.parentElement.style.display=' + "'none'"+';">&times;</span>' + data.responseJSON.Message + '</div>');
             })
 
     }

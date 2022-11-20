@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\Services\BusinessSolutions.OrderItemServices\BusinessSolutions.OrderItemServices.csproj" />
     <ProjectReference Include="..\..\Services\BusinessSolutions.OrderServices\BusinessSolutions.OrderServices.csproj" />
     <ProjectReference Include="..\..\Services\BusinessSolutions.ProviderServices\BusinessSolutions.ProviderServices.csproj" />
+    <ProjectReference Include="..\..\Shared\BusinessSolution.Shared\BusinessSolution.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessSolution.Shared.Exceptions;
 using BusinessSolutions.Data.Context;
 using BusinessSolutions.Data.Entities;
 using BusinessSolutions.OrderServices.Models;
@@ -26,13 +27,15 @@ public class OrderService : IOrderService
         AddOrderModelValidator validationRules = new AddOrderModelValidator();
         var result = validationRules.Validate(model);
         if (!result.IsValid)
-            throw new Exception("Невалидный");
+            throw new FluentValidation.ValidationException(result.Errors);
+
         var order = _mapper.Map<Order>(model);
         order.Date = order.Date.Date.AddDays(1);
 
         var check = _dbContext.Orders.FirstOrDefault(x => (x.Number == order.Number && x.ProviderId == order.ProviderId));
         if (check != null)
-            throw new Exception("Предметная область");
+            throw new Exception("Ограничение предметная область");
+
         await _dbContext.Orders.AddAsync(order);
         _dbContext.SaveChanges();
 
@@ -42,7 +45,7 @@ public class OrderService : IOrderService
     public async Task DeleteOrder(int id)
     {
         var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id))
-            ;//?? throw new ProcessException($"The order (id: {id}) was not found");
+            ?? throw new ProcessException($"The order (id: {id}) was not found");
 
         _dbContext.Orders.Remove(order);
         _dbContext.SaveChanges();
@@ -94,16 +97,19 @@ public class OrderService : IOrderService
         UpdateOrderModelValidator validationRules = new UpdateOrderModelValidator();
         var result = validationRules.Validate(model);
         if (!result.IsValid)
-            throw new Exception("Невалидный");
+            throw new FluentValidation.ValidationException(result.Errors);
 
         var order =_dbContext.Orders.FirstOrDefault(x => x.Id.Equals(id));
-        // ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
-        if (order != null)
-        {
-            order = _mapper.Map(model, order);
+        ProcessException.ThrowIf(() => order is null, $"The order (id: {id}) was not found");
 
-            _dbContext.Orders.Update(order);
-            _dbContext.SaveChanges();
-        }
+        var check = _dbContext.Orders.FirstOrDefault(x => (x.Number == order.Number && x.ProviderId == order.ProviderId && x.Id!=order.Id));
+        if (check != null)
+            throw new Exception("Ограничение предметная область");
+
+        order = _mapper.Map(model, order);
+
+        _dbContext.Orders.Update(order);
+        _dbContext.SaveChanges();
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration.Conventions;
+using BusinessSolution.Shared.Exceptions;
 using BusinessSolutions.Data.Context;
 using BusinessSolutions.Data.Entities;
 using BusinessSolutions.OrderItemServices.Models;
@@ -19,12 +20,25 @@ public class OrderItemService : IOrderItemService
         _mapper = mapper;
     }
 
-    public async Task<OrderItemModel> AddOrderItem(AddOrderItemModel model)
+    public async Task<OrderItemModel> AddOrderItem(int orderId, AddOrderItemModel model)
     {
+        var order = _dbContext.Orders.FirstOrDefault(x => x.Id == model.OrderId);
+        ProcessException.ThrowIf(() => order is null, $"The order (id: {orderId}) was not found");
+
         AddOrderItemModelValidator validationRules = new AddOrderItemModelValidator();
         var result = validationRules.Validate(model);
         if (!result.IsValid)
-            throw new Exception("Невалидный");
+        {
+            _dbContext.Orders.Remove(order);
+            throw new FluentValidation.ValidationException(result.Errors);
+        }
+
+        
+        if (order.Number == model.Name)
+        {            
+            _dbContext.Orders.Remove(order);
+            throw new Exception("Ограничение предметной области");
+        }
 
         var orderItem = _mapper.Map<OrderItem>(model);
         await _dbContext.OrderItems.AddAsync(orderItem);
@@ -42,12 +56,15 @@ public class OrderItemService : IOrderItemService
             AddOrUpdateOrderItemModelValidator validationRules = new AddOrUpdateOrderItemModelValidator();
             var result = validationRules.Validate(model);
             if (!result.IsValid)
-                throw new Exception("Невалидный");
+                throw new FluentValidation.ValidationException(result.Errors);
 
             var order = _dbContext.Orders.FirstOrDefault(x => x.Id == model.OrderId);
-
+            ProcessException.ThrowIf(() => order is null, $"The order (id: {orderId}) was not found");
             if (order.Number == model.Name)
-                throw new Exception("Предметная область");
+            {       
+                _dbContext.Orders.Remove(order);
+                throw new Exception("Ограничение предметной области");
+            }
 
             var entity = _dbContext.OrderItems.FirstOrDefaultAsync(x => x.Id == model.Id).Result;
             if (entity == null)
@@ -69,7 +86,7 @@ public class OrderItemService : IOrderItemService
     public async Task DeleteOrderItemModel(int id)
     {
         var orderItem = await _dbContext.OrderItems.FirstOrDefaultAsync(x => x.Id.Equals(id))
-            ;//?? throw new ProcessException($"The order (id: {id}) was not found");
+            ?? throw new ProcessException($"The order (id: {id}) was not found");
 
         _dbContext.OrderItems.Remove(orderItem);
         _dbContext.SaveChanges();
