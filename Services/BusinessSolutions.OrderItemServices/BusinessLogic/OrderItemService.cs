@@ -33,9 +33,9 @@ public class OrderItemService : IOrderItemService
         return _mapper.Map<OrderItemModel>(orderItem);
     }
 
-    public async Task AddOrUpdateOrderItem(IEnumerable<AddOrUpdateOrderItemModel> models)
+    public async Task AddOrUpdateOrderItem(int orderId, IEnumerable<AddOrUpdateOrderItemModel> models)
     {
-        _dbContext.OrderItems.RemoveRange(_dbContext.OrderItems.Where(x => x.OrderId == models.Last().OrderId));
+        _dbContext.OrderItems.RemoveRange(_dbContext.OrderItems.Where(x => x.OrderId == orderId));
         _dbContext.SaveChanges();
         foreach (var model in models)
         {
