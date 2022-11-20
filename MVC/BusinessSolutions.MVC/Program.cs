@@ -2,6 +2,7 @@ using BusinessSolutions.MVC;
 using BusinessSolutions.MVC.Configuration.AutoMapperConfiguration;
 using BusinessSolutions.MVC.Configuration.DbConfiguration;
 using BusinessSolutions.MVC.Configuration.VersionConfiguration;
+using BusinessSolutions.MVC.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddAppServices();
 
 var app = builder.Build();
 
-//app.UseMiddleware<Middleware>();
+app.UseMiddleware<Middleware>();
 
 if (!app.Environment.IsDevelopment())
 {

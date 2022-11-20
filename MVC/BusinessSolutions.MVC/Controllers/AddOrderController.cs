@@ -59,7 +59,7 @@ public class AddOrderController : Controller
                 OrderId = order.Id
             };
             var itemModel = mapper.Map<AddOrderItemModel>(item);
-            await orderItemService.AddOrderItem(itemModel);
+            await orderItemService.AddOrderItem(order.Id,itemModel);
         }
 
         return Ok();
